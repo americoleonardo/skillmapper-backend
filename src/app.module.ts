@@ -7,6 +7,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { SkillsModule } from './skills/skills.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Skills } from "./skills/skills.entity";
+import { UserModule } from './user/user.module';
+import {User} from "./user/user.entity";
 
 @Module({
   imports: [
@@ -17,12 +19,13 @@ import { Skills } from "./skills/skills.entity";
       database: 'skills',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [ Skills ]
+      entities: [ Skills, User ]
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true
     }),
-    SkillsModule
+    SkillsModule,
+    UserModule
   ]
 })
 export class AppModule {}

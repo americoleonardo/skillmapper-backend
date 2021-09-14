@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column, ObjectIdColumn } from 'typeorm';
 
-@Entity({name: "skills"})
-export class Skills {
+@Entity({name: "users"})
+export class User {
   @ObjectIdColumn()
   _id: string;
 
@@ -12,5 +12,8 @@ export class Skills {
   name: string;
 
   @Column()
-  timestamp: string;
+  email: string;
+
+  @Column()
+  password: string;
 }
