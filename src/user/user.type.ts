@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
+import {SkillsType} from "../skills/skills.type";
 
 @ObjectType('User')
 export class UserType {
@@ -13,4 +14,7 @@ export class UserType {
 
   @Field()
   password: string;
+
+  @Field(type => [SkillsType])
+  skills: string[]
 }

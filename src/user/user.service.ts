@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import {User} from "./user.entity";
-import {CreateUserInput} from "./user.input";
+import { User } from "./user.entity";
+import { CreateUserInput } from "./user.input";
+import {Skills} from "../skills/skills.entity";
 
 @Injectable()
 export class UserService {
@@ -30,5 +31,13 @@ export class UserService {
 
   getUsers(): Promise<User[]> {
     return this.userRepository.find();
+  }
+
+  async addSkillToUser(id: string, skillIds: string[]): Promise<User> {
+    const user = await this.userRepository.findOne({id: id});
+
+    user.skills = user.skills != undefined ? [...user.skills, ...skillIds] : skillIds;
+
+    return this.userRepository.save(user);
   }
 }

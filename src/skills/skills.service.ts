@@ -30,4 +30,14 @@ export class SkillsService {
 
     return this.skillsRepository.save(skill);
   }
+
+  async getSkillsByArray(skillIds: string[]): Promise<Skills[]> {
+    return this.skillsRepository.find({
+      where: {
+        id: {
+          $in: skillIds
+        }
+      }
+    });
+  }
 }
