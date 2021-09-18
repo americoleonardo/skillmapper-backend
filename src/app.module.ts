@@ -1,14 +1,10 @@
-/*
-* 1 CONFIGURAR AQUI
-* */
-
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { SkillsModule } from './skills/skills.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Skills } from "./skills/skills.entity";
 import { UserModule } from './user/user.module';
-import {User} from "./user/user.entity";
+import { User } from "./user/domain/entities/User";
 
 @Module({
   imports: [

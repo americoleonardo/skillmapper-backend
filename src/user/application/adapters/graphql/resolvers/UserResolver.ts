@@ -1,12 +1,11 @@
 import {Resolver, Query, Mutation, Args, ResolveField, Parent} from "@nestjs/graphql";
-import { UserType} from "./user.type";
-import { CreateUserInput } from "./user.input";
-import { UserService } from "./user.service";
-import {AddSkillToUserInput} from "./add-skill.input";
-import {SkillsService} from "../skills/skills.service";
-import {User} from "./user.entity";
+import { CreateUserDto } from "@user/application/dto/CreateUserDto";
+import { UserService } from "@user/domain/services/UserService";
+import { CreateSkillUserDto } from "@user/application/dto/CreateSkillUserDto";
+import {SkillsService} from "../../../../../skills/skills.service";
+import {User} from "../../../../domain/entities/User";
 
-@Resolver(of => UserType)
+@Resolver(of => User)
 export class UserResolver {
   constructor(
     private userService: UserService,
@@ -14,28 +13,28 @@ export class UserResolver {
   ) {
   }
 
-  @Query(returns => UserType)
+  @Query(returns => User)
   user(
     @Args('id') id: string
   ) {
     return this.userService.getUser(id);
   }
 
-  @Query(returns => [UserType])
+  @Query(returns => [User])
   async users() {
     return this.userService.getUsers()
   }
 
-  @Mutation(returns => UserType)
+  @Mutation(returns => User)
   createUser(
-    @Args('createUserInput') createUserInput: CreateUserInput
+    @Args('createUserInput') createUserInput: CreateUserDto
   ) {
     return this.userService.createUser(createUserInput);
   }
 
-  @Mutation(returns => UserType)
+  @Mutation(returns => User)
   addSkillToUser(
-    @Args('addSkillToUserInput') addSkillToUserInput: AddSkillToUserInput
+    @Args('addSkillToUserInput') addSkillToUserInput: CreateSkillUserDto
   ) {
     const { userId, skillIds } = addSkillToUserInput;
 

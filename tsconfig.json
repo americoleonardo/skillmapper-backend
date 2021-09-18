@@ -10,6 +10,11 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@user/*": ["./src/user/*"],
+      "@skill/*": ["./src/skill/*"],
+      "@test/*": ["./test/*"]
+    },
     "incremental": true
   }
 }
