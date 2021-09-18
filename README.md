@@ -33,7 +33,7 @@ yarn start:dev
 ### Docker-compose
 
 ```sh
-docker-compose up -d
+cd docker && docker-compose up -d
 ```
 
 ### Production
