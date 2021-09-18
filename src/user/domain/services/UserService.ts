@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { v4 as uuid } from 'uuid';
 import { User } from "../entities/User";
-import { CreateUserDto } from "../../application/dto/CreateUserDto";
+import { CreateUserDto } from "@user/application/dto/CreateUserDto";
 
 @Injectable()
 export class UserService {
@@ -32,7 +32,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async addSkillToUser(id: string, skillIds: string[]): Promise<User> {
+  async createSkillUser(id: string, skillIds: string[]): Promise<User> {
     const user = await this.userRepository.findOne({id: id});
 
     user.skills = user.skills != undefined ? [...user.skills, ...skillIds] : skillIds;

@@ -1,15 +1,15 @@
-import {Resolver, Query, Mutation, Args, ResolveField, Parent} from "@nestjs/graphql";
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from "@nestjs/graphql";
 import { CreateUserDto } from "@user/application/dto/CreateUserDto";
 import { UserService } from "@user/domain/services/UserService";
 import { CreateSkillUserDto } from "@user/application/dto/CreateSkillUserDto";
-import {SkillsService} from "../../../../../skills/skills.service";
-import {User} from "../../../../domain/entities/User";
+import { SkillService } from "@skill/domain/services/SkillService";
+import { User } from "@user/domain/entities/User";
 
 @Resolver(of => User)
 export class UserResolver {
   constructor(
     private userService: UserService,
-    private skillService: SkillsService
+    private skillService: SkillService
   ) {
   }
 
@@ -33,12 +33,12 @@ export class UserResolver {
   }
 
   @Mutation(returns => User)
-  addSkillToUser(
-    @Args('addSkillToUserInput') addSkillToUserInput: CreateSkillUserDto
+  createSkillUser(
+    @Args('createSkillUserDto') createSkillUserDto: CreateSkillUserDto
   ) {
-    const { userId, skillIds } = addSkillToUserInput;
+    const { userId, skillIds } = createSkillUserDto;
 
-    return this.userService.addSkillToUser(userId, skillIds);
+    return this.userService.createSkillUser(userId, skillIds);
   }
 
   @ResolveField()

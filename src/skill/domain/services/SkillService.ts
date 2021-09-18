@@ -1,27 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
-import { Skills } from "./skills.entity";
+import { Skill } from "@skill/domain/entities/Skill";
 import { Repository } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import {CreateSkillInput} from "./skills.input";
+import { CreateSkillDto } from "@skill/adapters/dto/CreateSkillDto";
 
 @Injectable()
-export class SkillsService {
+export class SkillService {
   constructor(
-    @InjectRepository(Skills)
-    private skillsRepository: Repository<Skills>
+    @InjectRepository(Skill)
+    private skillsRepository: Repository<Skill>
   ) {}
 
-  getSkill(id: string): Promise<Skills> {
+  getSkill(id: string): Promise<Skill> {
     return this.skillsRepository.findOne({id: id});
   }
 
-  getSkills(): Promise<Skills[]> {
+  getSkills(): Promise<Skill[]> {
     return this.skillsRepository.find();
   }
 
-  createSkill(createSkillInput: CreateSkillInput): Promise<Skills> {
-    const { name, timestamp } = createSkillInput;
+  createSkill(createSkillDto: CreateSkillDto): Promise<Skill> {
+    const { name, timestamp } = createSkillDto;
+
     const skill = this.skillsRepository.create({
       id: uuid(),
       name,
@@ -31,7 +32,7 @@ export class SkillsService {
     return this.skillsRepository.save(skill);
   }
 
-  async getSkillsByArray(skillIds: string[]): Promise<Skills[]> {
+  async getSkillsByArray(skillIds: string[]): Promise<Skill[]> {
     return this.skillsRepository.find({
       where: {
         id: {

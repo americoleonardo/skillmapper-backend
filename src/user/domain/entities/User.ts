@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, Column, ObjectIdColumn } from 'typeorm';
-import {Field, ID, ObjectType} from "@nestjs/graphql";
-import {SkillsType} from "../../../skills/skills.type";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Skill } from "@skill/domain/entities/Skill";
 
 @Entity({name: "users"})
 @ObjectType('User')
@@ -25,6 +25,6 @@ export class User {
   password: string;
 
   @Column()
-  @Field(type => [SkillsType])
+  @Field(type => [Skill])
   skills: string[];
 }
