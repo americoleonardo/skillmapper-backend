@@ -6,6 +6,8 @@ import { User } from "@user/domain/entities/User";
 import { CreateUserDto } from "@user/application/dto/CreateUserDto";
 import { UserRepository } from "@user/domain/repositories/UserRepository";
 
+const SALT: number = 10;
+
 @Injectable()
 export class UserService {
   constructor(
@@ -13,20 +15,38 @@ export class UserService {
     private userRepository: Repository<User>
   ) {}
 
-  getUser(id: string): Promise<User> {
-    return this.userRepository.findOne({id: id});
+  async getUser(id: string): Promise<User> {
+    const data = await this.userRepository.findOne({id: id});
+
+    data.password = "xxxxxxxxxxxxxxx";
+
+    return data;
   }
 
   async createUser(createUserInput: CreateUserDto): Promise<User> {
     const { name, email, password } = createUserInput;
+
+    const userExists: User = await this.userRepository.findOne({ where: { email } });
+
+    if (userExists) {
+      return null
+    }
+
+    const bcrypt = require('bcrypt');
+    const hash = bcrypt.hashSync(password, SALT);
+
     const user = this.userRepository.create({
       id: uuid(),
       name,
       email,
-      password
+      password: hash
     });
 
-    return this.userRepository.save(user);
+    const data = await this.userRepository.save(user);
+
+    data.password = "xxxxxxxxxxxxxxx";
+
+    return data;
   }
 
   getUsers(): Promise<User[]> {
