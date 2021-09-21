@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UserService } from '@user/domain/services/UserService';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { User } from "./user.entity";
-import { UserResolver } from "./user.resolver";
-import { SkillsModule } from "../skills/skills.module";
+import { User } from "@user/domain/entities/User";
+import { UserResolver } from "@user/application/adapters/graphql/resolvers/UserResolver";
+import { SkillModule } from "@skill/skill.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ User ]),
-    SkillsModule
+    SkillModule
   ],
-  providers: [UserResolver, UserService]
+  providers: [ UserResolver, UserService ]
 })
 export class UserModule {}
