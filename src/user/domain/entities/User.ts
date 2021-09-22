@@ -25,6 +25,6 @@ export class User {
   password: string;
 
   @Column()
-  @Field(type => [Skill])
+  @Field(type => [Skill], { nullable: true })
   skills: string[];
 }

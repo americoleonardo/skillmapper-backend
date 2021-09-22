@@ -13,7 +13,7 @@ export class UserResolver {
   ) {
   }
 
-  @Query(returns => User)
+  @Query(returns => User, { nullable: true })
   user(
     @Args('id') id: string
   ) {
